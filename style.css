@@ -21,8 +21,16 @@ body {
     justify-content: space-between;
     border: 5px solid gray;
     border-radius: 10px;
-    height: 80%;
+    height: 95%;
     width: 80%;
+}
+
+#date {
+    text-align: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 30px;
 }
 
 .content {
@@ -30,6 +38,8 @@ body {
     flex-direction: column;
     justify-content: flex-end;
     padding: 40px;
+    width: 75%;
+    position: relative;
 }
 
 .sidebar {
@@ -42,6 +52,7 @@ body {
 
 .forecast-hours {
     display: flex;
+    justify-content: space-around;
 }
 
 .detail {
@@ -55,4 +66,11 @@ body {
 
 .forecast-card {
     display: flex;
+    margin: 5px 0;
+    border: 1px solid white;
+    align-items: center;
+}
+
+.card-hour {
+    border: 1px solid white;
 }

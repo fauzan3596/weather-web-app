@@ -2,75 +2,224 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-weight: 400;
 }
 
 body {
-    display: flex;
     height: 100vh;
+    color: #fff;
+    font-family: "Roboto", sans-serif;
+}
+
+main {
+    display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #161616;
-    color: #fff;
-    background-image: url('assets/bg-weather.png');
-    background-size: cover;
-    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+h1 {
+    font-size: 35px;
+}
+
+h2 {
+    font-size: 18px;
+}
+
+.background {
+    background: url('assets/bg-weather.png') center/cover no-repeat;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    filter: blur(3px);
+    z-index: -1;
 }
 
 .container {
+    height: 85%;
+    width: 85%;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: space-between;
-    border: 5px solid gray;
-    border-radius: 10px;
-    height: 95%;
-    width: 80%;
 }
 
-#date {
-    text-align: right;
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-top: 30px;
-}
-
-.content {
+.left-content {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 40px;
-    width: 75%;
-    position: relative;
+    justify-content: space-between;
+    flex: .75;
+    padding: 20px;
 }
 
-.sidebar {
-    background-color:  rgba(255, 255, 255, 0.1);
-    padding: 40px;
+.date {
+    text-align: right;
+}
+
+.today-weather {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+.today-temp {
+    font-size: 80px;
+}
+
+.today-forecast {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 15px;
+    flex-wrap: wrap;
+}
+
+.today-card {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 15px 10px;
+}
+
+.today-card-info {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
-.forecast-hours {
+.today-img-weather {
+    height: 120px;
+    width: auto;
+}
+
+.hour-img-weather {
+    height: 50px;
+    width: auto;
+}
+
+.right-content {
+    flex: .25;
+    background-color: rgba(255, 255, 255, 0.04);
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.search-city {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-bar {
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 10px 0;
+    font-size: 18px;
+    outline: none;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.fa-search {
+    font-size: 20px;
+}
+
+.weather-details {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 5px;
 }
 
 .detail {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .detail-value {
     display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
 }
 
-.forecast-card {
+.detail-img {
+    height: 30px;
+    width: auto;
+}
+
+.week-forecast {
+    margin-top: 10px;
+}
+
+.week-forecast-scrolling {
+    overflow: auto;
+    height: 187px;
     display: flex;
-    margin: 5px 0;
-    border: 1px solid white;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.week-forecast-scrolling::-webkit-scrollbar {
+    display: none;
+}
+
+.week-forecast p {
+    font-size: 15px;
+}
+
+.week-card:first-child {
+    margin-top: 10px;
+}
+
+.week-card-info {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-.card-hour {
-    border: 1px solid white;
+.week-image {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    height: 50px;
+    width: 50px;
+}
+
+.week-img-weather {
+    height: auto;
+    width: auto;
+}
+
+.week-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.week-date-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.week-weather {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.week-temp {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: right;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    padding-left: 8px;
 }

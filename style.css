@@ -78,7 +78,7 @@ p {
     gap: 15px;
 }
 
-.today-temp {
+#today-temp {
     font-size: 100px;
 }
 

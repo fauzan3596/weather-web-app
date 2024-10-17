@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Web App</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -20,6 +17,9 @@
                 <section id="date">
                     <h2>21 April 2023 | 11:00</h2>
                 </section>
+
+                <img src="assets/extreme-rain.svg" alt="" class="today-img-weather">
+
                 <section class="main-info">
                     <div class="today-weather">
                         <h2 class="today-temp">16&deg;</h2>
@@ -27,11 +27,10 @@
                             <h1>Heavy Rain</h1>
                             <h1>London</h1>
                         </div>
-                        <img src="assets/extreme-rain.svg" alt="" class="today-img-weather">
                     </div>
                     <hr>
-                    <div class="today-forecast">
-                        <div class="today-card">
+                    <div id="today-forecast">
+                        <!-- <div class="today-card">
                             <div class="today-card-info">
                                 <p>09:00</p>
                                 <img src="assets/extreme-day-rain.svg" alt="" class="hour-img-weather">
@@ -100,59 +99,62 @@
                                 <img src="assets/extreme-day-rain.svg" alt="" class="hour-img-weather">
                                 <p>18&deg;C</p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </section>
             </header>
+
             <aside class="right-content">
                 <section class="search-city">
                     <input type="text" placeholder="Search Location..." id="search-bar">
                     <i class="fa fa-search"></i>
                 </section>
+
                 <hr>
-                <section class="weather-details">
+                <section id="weather-details">
                     <h2>Weather details...</h2>
                     <div class="detail">
                         <p>Temp max</p>
                         <div class="detail-value">
-                            <p>19&deg;</p>
-                            <img src="assets/thermometer-warmer.svg" alt="" class="detail-img">
+                            <p id="max-value"></p>
+                            <img src="assets/thermometer-warmer.svg" alt="max temp" class="detail-img">
                         </div>
                     </div>
                     <div class="detail">
                         <p>Temp min</p>
                         <div class="detail-value">
-                            <p>15&deg;</p>
-                            <img src="assets/thermometer-colder.svg" alt="" class="detail-img">
+                            <p id="min-value"></p>
+                            <img src="assets/thermometer-colder.svg" alt="min temp" class="detail-img">
                         </div>
                     </div>
                     <div class="detail">
                         <p>Humadity</p>
                         <div class="detail-value">
-                            <p>58%</p>
-                            <img src="assets/raindrops.svg" alt="" class="detail-img">
+                            <p id="humadity-value"></p>
+                            <img src="assets/raindrops.svg" alt="humadity" class="detail-img">
                         </div>
                     </div>
                     <div class="detail">
                         <p>Cloudy</p>
                         <div class="detail-value">
-                            <p>86%</p>
-                            <img src="assets/cloudy.svg" alt="" class="detail-img">
+                            <p id="cloudy-value"></p>
+                            <img src="assets/cloudy.svg" alt="clody" class="detail-img">
                         </div>
                     </div>
                     <div class="detail">
                         <p>Wind</p>
                         <div class="detail-value">
-                            <p>5km/h</p>
-                            <img src="assets/wind.svg" alt="" class="detail-img">
+                            <p id="wind-value"></p>
+                            <img src="assets/wind.svg" alt="wind" class="detail-img">
                         </div>
                     </div>
                     <hr>
                 </section>
+
                 <section class="week-forecast">
-                    <h2>This week forecast...</h2>
-                    <div class="week-forecast-scrolling">
-                        <div class="week-card">
+                    <h2 style="margin-bottom: 15px;">This week forecast...</h2>
+                    <div id="week-forecast-scrolling">
+                        <!-- <div class="week-card">
                             <div class="week-card-info">
                                 <div class="week-date">
                                     <div class="week-image">
@@ -270,7 +272,7 @@
                                     <p>9&deg;C</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </section>
             </aside>

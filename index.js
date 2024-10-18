@@ -97,8 +97,11 @@ function hourFormatted(date) {
 async function getWeather() {
     try {
         const responseWeek = await fetch(urlWeek);
-        const dataWeek= await responseWeek.json();
         const responseDay = await fetch(urlDay);
+        if (!responseWeek.ok || !responseDay.ok) {
+            throw new Error("Failed to fetch weather data");
+        }
+        const dataWeek = await responseWeek.json();
         const dataDay = await responseDay.json();
         dataWeek.daily.time.forEach((e, i) => {
             document.querySelector("#week-forecast-scrolling").innerHTML += `
@@ -121,13 +124,29 @@ async function getWeather() {
                 </div>
             `
         });
-        document.querySelector("#today-temp").innerHTML = `${dataDay.current.temperature_2m}&deg`
-        document.querySelector("#today-code").innerHTML = `${dataDay.current.weather_code}`
-        document.querySelector("#max-value").innerHTML = `${dataDay.daily.temperature_2m_max}&deg`
-        document.querySelector("#min-value").innerHTML = `${dataDay.daily.temperature_2m_min}&deg`
-        document.querySelector("#humadity-value").innerHTML = `${dataDay.current.relative_humidity_2m}%`
-        document.querySelector("#cloudy-value").innerHTML = `${dataDay.current.cloud_cover}%`
-        document.querySelector("#wind-value").innerHTML = `${dataDay.current.wind_speed_10m}km/h`
+        document.querySelector("#today-temp").innerHTML = `${dataDay.current.temperature_2m}&deg`;
+        document.querySelector("#today-code").innerHTML = `${dataDay.current.weather_code}`;
+        document.querySelector("#max-value").innerHTML = `${dataDay.daily.temperature_2m_max}&deg`;
+        document.querySelector("#min-value").innerHTML = `${dataDay.daily.temperature_2m_min}&deg`;
+        document.querySelector("#humadity-value").innerHTML = `${dataDay.current.relative_humidity_2m}%`;
+        document.querySelector("#cloudy-value").innerHTML = `${dataDay.current.cloud_cover}%`;
+        document.querySelector("#wind-value").innerHTML = `${dataDay.current.wind_speed_10m}km/h`;
+        for (let i = 0; i < dataDay.hourly.time.length; i++) {
+            dataDay.hourly.time[i] = new Date(dataDay.hourly.time[i])
+            const hour = dataDay.hourly.time[i].getHours();
+            const minute = dataDay.hourly.time[i].getMinutes();
+            if(i >= 9 && i <= 18) {
+                document.querySelector("#today-forecast").innerHTML += `
+                    <div class="today-card">
+                        <div class="today-card-info">
+                            <p>${hour < 10 ? '0' + hour : hour}:${'0' + minute}</p>
+                            <img src="assets/extreme-day-rain.svg" alt="" class="hour-img-weather">
+                            <p>${dataDay.hourly.temperature_2m[i]}&deg;C</p>
+                        </div>
+                    </div>
+                `
+            }
+        }
     } catch (error) {
         console.log(error)
     }

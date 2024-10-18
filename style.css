@@ -43,8 +43,8 @@ p {
 }
 
 .container {
-    height: 85%;
-    width: 85%;
+    height: 520px;
+    width: 1165px;
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
@@ -79,6 +79,7 @@ p {
 }
 
 #today-temp {
+    font-family: "Comfortaa", sans-serif;
     font-size: 100px;
 }
 
@@ -117,6 +118,8 @@ p {
     flex-direction: column;
     padding: 20px;
     font-family: "Poppins", sans-serif;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .search-city {

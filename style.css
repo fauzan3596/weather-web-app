@@ -66,6 +66,10 @@ p {
     font-family: "Poppins", sans-serif;
 }
 
+#current-img-weather {
+    text-align: center;
+}
+
 .today-img-weather {
     height: 190px;
     width: auto;

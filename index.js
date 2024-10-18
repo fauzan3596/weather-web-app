@@ -1,6 +1,3 @@
-const urlWeek = "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=weather_code,temperature_2m_max,temperature_2m_min";
-const urlDay = "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,relative_humidity_2m,weather_code,cloud_cover,wind_speed_10m&hourly=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&forecast_days=1";
-
 const date = new Date();
 
 function formatDate(date) {
@@ -88,14 +85,39 @@ function dateFormatted(date) {
     return dateFormatted.toLocaleDateString("en-US", options);
 }
 
-function hourFormatted(date) {
-    const hourFormatted = new Date(parseInt(date));
-    const localeSpecificTime = hourFormatted.toLocaleTimeString();
-    return localeSpecificTime.replace(/:\d+ /, ' ');
+async function getWeatherCity() {
+    try {
+        const city = document.querySelector("#search-bar").value;
+        
+        const urlCity = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=10&language=en&format=json`;
+        const responseCity = await fetch(url);
+        if (!responseCity.ok) {
+            throw new Error("Failed to fetch cities weather data");
+        }
+        const dataCity = await responseCity.json();
+        const latitude = dataCity.results[0].latitude;
+        const longitude = dataCity.results[0].longitude;
+        const cityName = dataCity.results[0].name;
+        console.log(latitude)
+        console.log(longitude);
+        console.log(cityName)
+        getWeather(latitude, longitude);
+    } catch (error) {
+        console.log(error)
+    }
 }
 
-async function getWeather() {
+const searchForm = document.querySelector("#search-form");
+searchForm.addEventListener("submit", function() {
+    console.log('aaaaa')
+    getWeatherCity();
+})
+
+async function getWeather(latitude, longitude) {
     try {
+        const urlWeek = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min`;
+        const urlDay = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,is_day,weather_code,cloud_cover,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&forecast_days=1`;
+
         const responseWeek = await fetch(urlWeek);
         const responseDay = await fetch(urlDay);
         if (!responseWeek.ok || !responseDay.ok) {
@@ -103,17 +125,19 @@ async function getWeather() {
         }
         const dataWeek = await responseWeek.json();
         const dataDay = await responseDay.json();
+
+        // Weekly weather
         dataWeek.daily.time.forEach((e, i) => {
             document.querySelector("#week-forecast-scrolling").innerHTML += `
                 <div class="week-card">
                     <div class="week-card-info">
                         <div class="week-date">
                             <div class="week-image">
-                                <img src="assets/extreme-day-rain.svg" alt="" class="week-img-weather">
+                                <img src="${wmo[dataWeek.daily.weather_code[i]].day.image}" alt="" class="week-img-weather">
                             </div>
                             <div class="week-date-info">
                                 <p>${dateFormatted(e)}</p>
-                                <p class="week-weather">${dataWeek.daily.weather_code[i]}</p>
+                                <p class="week-weather">${wmo[dataWeek.daily.weather_code[i]].day.description}</p>
                             </div>
                         </div>
                         <div class="week-temp">
@@ -124,106 +148,62 @@ async function getWeather() {
                 </div>
             `
         });
+
+        // Current Weather
+        if(dataDay.current.is_day == 0) {
+            document.querySelector("#current-img-weather").innerHTML = `
+                <img src="${wmo[dataDay.current.weather_code].night.image}" alt="current weather" class="today-img-weather">
+            `;
+        }else if(dataDay.current.is_day == 1) {
+            document.querySelector("#current-img-weather").innerHTML = `
+                <img src="${wmo[dataDay.current.weather_code].day.image}" alt="current weather" class="today-img-weather">
+            `;
+        };
         document.querySelector("#today-temp").innerHTML = `${dataDay.current.temperature_2m}&deg`;
-        document.querySelector("#today-code").innerHTML = `${dataDay.current.weather_code}`;
+        document.querySelector("#today-code").innerHTML = `${wmo[dataDay.current.weather_code].day.description}`;
+        
+        // Weather details
         document.querySelector("#max-value").innerHTML = `${dataDay.daily.temperature_2m_max}&deg`;
         document.querySelector("#min-value").innerHTML = `${dataDay.daily.temperature_2m_min}&deg`;
         document.querySelector("#humadity-value").innerHTML = `${dataDay.current.relative_humidity_2m}%`;
         document.querySelector("#cloudy-value").innerHTML = `${dataDay.current.cloud_cover}%`;
         document.querySelector("#wind-value").innerHTML = `${dataDay.current.wind_speed_10m}km/h`;
-        for (let i = 0; i < dataDay.hourly.time.length; i++) {
-            dataDay.hourly.time[i] = new Date(dataDay.hourly.time[i])
-            const hour = dataDay.hourly.time[i].getHours();
-            const minute = dataDay.hourly.time[i].getMinutes();
-            if(i >= 9 && i <= 18) {
+
+        // Hourly weather
+        dataDay.hourly.time.map((e, i) => {
+            dataDay.hourly.time[i] = new Date(dataDay.hourly.time[i]);
+            return dataDay.hourly.time;
+        });
+        dataDay.hourly.time.forEach((e, i) => {
+            let hour = e.getHours();
+            const minute = '0' + e.getMinutes();
+            hour = hour < 10 ? `0` + hour : hour;
+            if (i >= 9 && i <= 18) {
                 document.querySelector("#today-forecast").innerHTML += `
                     <div class="today-card">
                         <div class="today-card-info">
-                            <p>${hour < 10 ? '0' + hour : hour}:${'0' + minute}</p>
-                            <img src="assets/extreme-day-rain.svg" alt="" class="hour-img-weather">
+                            <p>${hour}:${minute}</p>
+                            <img src="${wmo[dataDay.hourly.weather_code[i]].day.image}" alt="" class="hour-img-weather">
                             <p>${dataDay.hourly.temperature_2m[i]}&deg;C</p>
                         </div>
                     </div>
                 `
-            }
-        }
+            };
+        });
     } catch (error) {
         console.log(error)
     }
 }
-getWeather()
 
-// const todayForecast = {
-//     hourly: [
-//         "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"],
-//     temp: [10, 13, 16, 19, 22, 25, 28, 31, 34, 37],
-// };
+function showPosition(position) {
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+    getWeather(latitude, longitude);
+}
 
-// todayForecast.hourly.forEach((hour, index) => {
-//     document.querySelector("#today-forecast").innerHTML += `
-//     <div class="today-card">
-//         <div class="today-card-info">
-//             <p>${todayForecast.hourly[index]}</p>
-//             <img src="assets/extreme-day-rain.svg" alt="Hourly Weather image" class="hour-img-weather">
-//             <p>${todayForecast.temp[index]}&deg;C</p>
-//         </div>
-//     </div>
-//     `
-// });
-
-// const weatherDetails = {
-//     tempMax: 19,
-//     tempMin: 14,
-//     humadity: 58,
-//     cloudy: 86,
-//     wind: 5
-// };
-
-// document.querySelector("#max-value").innerHTML += `${weatherDetails.tempMax}&deg`
-// document.querySelector("#min-value").innerHTML += `${weatherDetails.tempMin}&deg`
-// document.querySelector("#humadity-value").innerHTML += `${weatherDetails.humadity}%`
-// document.querySelector("#cloudy-value").innerHTML += `${weatherDetails.cloudy}%`
-// document.querySelector("#wind-value").innerHTML += `${weatherDetails.wind}km/h`
-
-// const weekForecast = {
-//     week: [],
-//     weather: ["Heavy Rain", "Rain", "Sunny", "Cloudy", "Foggy", "Overcast", "Hot"],
-//     maxTemp: [13, 18, 21, 23, 26, 39, 35],
-//     minTemp: [10, 15, 18, 20, 23, 26, 30],
-// }
-
-// function next7Day() {
-//     const options = {
-//         weekday: 'long',
-//         month: "long",
-//         day: "numeric",
-//     };
-//     for (let i = 1; i <= 7; i++) {
-//         let nextDay = new Date(date);
-//         nextDay.setDate(date.getDate() + i);
-//         weekForecast.week.push(nextDay.toLocaleDateString("en-US", options));
-//     }
-// }
-
-// next7Day()
-// weekForecast.week.forEach((el, index) => {
-//     document.querySelector("#week-forecast-scrolling").innerHTML += `
-//     <div class="week-card">
-//         <div class="week-card-info">
-//             <div class="week-date">
-//                 <div class="week-image">
-//                     <img src="assets/extreme-day-rain.svg" alt="" class="week-img-weather">
-//                 </div>
-//                 <div class="week-date-info">
-//                     <p>${weekForecast.week[index]}</p>
-//                     <p class="week-weather">${weekForecast.weather[index]}</p>
-//                 </div>
-//             </div>
-//             <div class="week-temp">
-//                 <p>${weekForecast.maxTemp[index]}&deg;C</p>
-//                 <p>${weekForecast.minTemp[index]}&deg;C</p>
-//             </div>
-//         </div>
-//     </div>
-//     `
-// })
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
+}
+getLocation();

@@ -15,17 +15,19 @@
         <div class="container">
             <header class="left-content">
                 <section id="date">
-                    <h2>21 April 2023 | 11:00</h2>
+                    <!-- <h2>21 April 2023 | 11:00</h2> -->
                 </section>
 
-                <img src="assets/extreme-rain.svg" alt="" class="today-img-weather">
+                <div id="current-img-weather">
+                    <!-- <img src="assets/extreme-rain.svg" alt="" class="today-img-weather"> -->
+                </div>
 
                 <section class="main-info">
                     <div class="today-weather">
                         <h2 id="today-temp">16&deg;</h2>
                         <div>
                             <h1 id="today-code">Heavy Rain</h1>
-                            <h1>London</h1>
+                            <h1 id="city-name">London</h1>
                         </div>
                     </div>
                     <hr>
@@ -106,7 +108,9 @@
 
             <aside class="right-content">
                 <section class="search-city">
-                    <input type="text" placeholder="Search Location..." id="search-bar">
+                    <form id="search-form">
+                        <input type="text" placeholder="Search Location..." id="search-bar" value="">
+                    </form>
                     <i class="fa fa-search"></i>
                 </section>
 
@@ -279,6 +283,7 @@
         </div>
     </main>
 
+    <script src="wmo.js"></script>
     <script src="index.js"></script>
 </body>
 

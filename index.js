@@ -70,7 +70,7 @@ function formatDate(date) {
             dayWeek = 'Saturday';
             break;
     }
-    return `${dayWeek}, ${day} ${month} ${year} | ${hour}:${minute < 10 ? '0' + minute : minute} `;
+    return `${dayWeek}, ${day} ${month} ${year} | ${hour < 10 ? '0' + hour : hour}:${minute < 10 ? '0' + minute : minute} `;
 }
 
 document.querySelector("#date").innerHTML = formatDate(date);
@@ -85,12 +85,13 @@ function dateFormatted(date) {
     return dateFormatted.toLocaleDateString("en-US", options);
 }
 
-async function getWeatherCity() {
+async function getWeatherCity(city) {
     try {
-        const city = document.querySelector("#search-bar").value;
-        
+        if(city == undefined) {
+            city = "Jakarta";
+        }
         const urlCity = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=10&language=en&format=json`;
-        const responseCity = await fetch(url);
+        const responseCity = await fetch(urlCity);
         if (!responseCity.ok) {
             throw new Error("Failed to fetch cities weather data");
         }
@@ -98,19 +99,21 @@ async function getWeatherCity() {
         const latitude = dataCity.results[0].latitude;
         const longitude = dataCity.results[0].longitude;
         const cityName = dataCity.results[0].name;
-        console.log(latitude)
-        console.log(longitude);
-        console.log(cityName)
+        console.log(latitude, longitude, cityName)
         getWeather(latitude, longitude);
+        document.getElementById("city-name").innerHTML = cityName;
+        document.querySelector("#search-bar").value = "";
     } catch (error) {
         console.log(error)
     }
 }
+getWeatherCity();
 
 const searchForm = document.querySelector("#search-form");
-searchForm.addEventListener("submit", function() {
-    console.log('aaaaa')
-    getWeatherCity();
+searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let city = document.querySelector("#search-bar");
+    getWeatherCity(city.value)
 })
 
 async function getWeather(latitude, longitude) {
@@ -127,6 +130,7 @@ async function getWeather(latitude, longitude) {
         const dataDay = await responseDay.json();
 
         // Weekly weather
+        document.querySelector("#week-forecast-scrolling").innerHTML = "";
         dataWeek.daily.time.forEach((e, i) => {
             document.querySelector("#week-forecast-scrolling").innerHTML += `
                 <div class="week-card">
@@ -154,13 +158,15 @@ async function getWeather(latitude, longitude) {
             document.querySelector("#current-img-weather").innerHTML = `
                 <img src="${wmo[dataDay.current.weather_code].night.image}" alt="current weather" class="today-img-weather">
             `;
+            document.querySelector("#today-code").innerHTML = `${wmo[dataDay.current.weather_code].night.description}`;
         }else if(dataDay.current.is_day == 1) {
             document.querySelector("#current-img-weather").innerHTML = `
                 <img src="${wmo[dataDay.current.weather_code].day.image}" alt="current weather" class="today-img-weather">
             `;
+            document.querySelector("#today-code").innerHTML = `${wmo[dataDay.current.weather_code].day.description}`;
         };
         document.querySelector("#today-temp").innerHTML = `${dataDay.current.temperature_2m}&deg`;
-        document.querySelector("#today-code").innerHTML = `${wmo[dataDay.current.weather_code].day.description}`;
+        
         
         // Weather details
         document.querySelector("#max-value").innerHTML = `${dataDay.daily.temperature_2m_max}&deg`;
@@ -170,6 +176,7 @@ async function getWeather(latitude, longitude) {
         document.querySelector("#wind-value").innerHTML = `${dataDay.current.wind_speed_10m}km/h`;
 
         // Hourly weather
+        document.querySelector("#today-forecast").innerHTML = "";
         dataDay.hourly.time.map((e, i) => {
             dataDay.hourly.time[i] = new Date(dataDay.hourly.time[i]);
             return dataDay.hourly.time;

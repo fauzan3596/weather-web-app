@@ -280,3 +280,149 @@ const wmo = {
         },
     },
 };
+
+const weekly = {
+    0: {
+        description: "Clear Sky",
+        image: "assets/clear-day.svg",
+    },
+    1: {
+        description: "Mainly clear",
+        image: "assets/clear-day.svg",
+    },
+    2: {
+        description: "Partly cloudy",
+        image: "assets/cloudy.svg",
+    },
+    3: {
+        description: "Cloudy",
+        image: "assets/overcast.svg",
+    },
+    45: {
+        description: "Foggy",
+        image: "assets/fog.svg",
+    },
+    48: {
+        description: "Rime Fog",
+        image: "assets/fog.svg",
+    },
+    51: {
+        description: "Light Drizzle",
+        image: "assets/drizzle.svg",
+    },
+    53: {
+        description: "Drizzle",
+        image: "assets/overcast-drizzle.svg",
+    },
+    55: {
+        description: "Heavy Drizzle",
+        image: "assets/extreme-drizzle.svg",
+    },
+    56: {
+        description: "Light Freezing Drizzle",
+        image: "assets/hail.svg",
+    },
+    57: {
+        description: "Freezing Drizzle",
+        image: "assets/extreme-hail.svg",
+    },
+    61: {
+        description: "Light Rain",
+        image: "assets/rain.svg",
+    },
+    63: {
+        description: "Rain",
+        image: "assets/overcast-rain.svg",
+    },
+    65: {
+        description: "Heavy Rain",
+        image: "assets/extreme-rain.svg",
+    },
+    66: {
+        description: "Light Freezing Rain",
+        image: "assets/sleet.svg",
+    },
+    67: {
+        description: "Freezing Rain",
+        image: "assets/extreme-sleet.svg",
+    },
+    71: {
+        description: "Light Snow",
+        image: "assets/snow.svg",
+    },
+    73: {
+        description: "Snow",
+        image: "assets/overcast-snow.svg",
+    },
+    75: {
+        description: "Heavy Snow",
+        image: "assets/extreme-snow.svg",
+    },
+    77: {
+        description: "Snow Grains",
+        image: "assets/hail.svg",
+    },
+    80: {
+        description: "Light Showers",
+        image: "assets/rain.svg",
+    },
+    81: {
+        description: "Showers",
+        image: "assets/overcast-rain.svg",
+    },
+    82: {
+        description: "Heavy Showers",
+        image: "assets/extreme-rain.svg",
+    },
+    85: {
+        description: "Light Snow Showers",
+        image: "assets/snow.svg",
+    },
+    86: {
+        description: "Snow Showers",
+        image: "assets/extreme-snow.svg",
+    },
+    95: {
+        description: "Thunderstorm",
+        image: "assets/thunderstorms-rain.svg",
+    },
+    96: {
+        description: "Light Thunderstorms With Hail",
+        image: "assets/thunderstorms-snow.svg",
+    },
+    99: {
+        description: "Thunderstorm With Hail",
+        image: "assets/thunderstorms-snow.svg",
+    },
+}
+
+const background = {
+    0: "assets/background-img/clear.jpg",
+    1: "assets/background-img/clear.jpg",
+    2: "assets/background-img/partly-cloudy.jpg",
+    3: "assets/background-img/overcast.jpg",
+    45: "assets/background-img/fog.jpg",
+    48: "assets/background-img/rime-fog.jpg",
+    51: "assets/background-img/drizzle.jpg",
+    53: "assets/background-img/drizzle.jpg",
+    55: "assets/background-img/drizzle.jpg",
+    56: "assets/background-img/freezing-drizzle.jpg",
+    57: "assets/background-img/freezing-drizzle.jpg",
+    61: "assets/background-img/rain.jpg",
+    63: "assets/background-img/rain.jpg",
+    65: "assets/background-img/rain.jpg",
+    66: "assets/background-img/freezing-rain.jpg",
+    67: "assets/background-img/freezing-rain.jpg",
+    71: "assets/background-img/snow-fall.jpg",
+    73: "assets/background-img/snow-fall.jpg",
+    75: "assets/background-img/snow-fall.jpg",
+    77: "assets/background-img/snow-grains.jpg",
+    80: "assets/background-img/rain-shower.jpg",
+    81: "assets/background-img/rain-shower.jpg",
+    82: "assets/background-img/rain-shower.jpg",
+    85: "assets/background-img/snow-showers.jpg",
+    86: "assets/background-img/snow-showers.jpg",
+    95: "assets/background-img/thunderstorm.jpg",
+    96: "assets/background-img/thunderstorm-hail.jpg",
+    99: "assets/background-img/thunderstorm-hail.jpg",
+}

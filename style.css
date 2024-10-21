@@ -33,12 +33,15 @@ p {
     font-size: 13px;
 }
 
-.background {
-    background: url('https://cdn.pixabay.com/photo/2024/02/16/14/42/ai-generated-8577700_1280.png') center/cover no-repeat;
+#background {
+    /* background-image: url('https://images.pexels.com/photos/15473723/pexels-photo-15473723/free-photo-of-car-driving-on-road-in-snow-in-winter-landscape.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background: url('assets/background-img/thunderstorm-hail.jpg') center/cover no-repeat; */
     height: 100%;
     width: 100%;
     position: absolute;
-    filter: blur(2px);
     z-index: -1;
 }
 
@@ -211,8 +214,8 @@ input::placeholder {
 }
 
 .week-img-weather {
-    height: auto;
-    width: auto;
+    height: 50px;
+    width: 50px;
 }
 
 .week-date {
@@ -236,6 +239,6 @@ input::placeholder {
     flex-direction: column;
     gap: 3px;
     text-align: right;
-    padding-left: 10px;
+    padding-left: 15px;
 }
 

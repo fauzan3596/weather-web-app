@@ -85,14 +85,33 @@ function dateFormatted(date) {
     return dateFormatted.toLocaleDateString("en-US", options);
 }
 
+function showSnackbar() {
+    const snackbar = document.querySelector("#snackbar");
+    const closeSnackbar = document.querySelector("#img-cross");
+    snackbar.className = "show";
+    setTimeout(() => {
+        snackbar.className = snackbar.className.replace("show", "");
+    }, 3000);
+    closeSnackbar.addEventListener("click", () => {
+        snackbar.className = snackbar.className.replace("", "show");
+    })
+}
+
 async function getWeatherCity(city) {
     try {
         const urlCity = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=10&language=en&format=json`;
         const responseCity = await fetch(urlCity);
         if (!responseCity.ok) {
             throw new Error("Failed to fetch cities weather data");
-        }
+        };
+
         const dataCity = await responseCity.json();
+
+        // Cek apakah lokasi valid
+        if (dataCity.results == undefined) {
+            showSnackbar();
+        };
+
         const latitude = dataCity.results[0].latitude;
         const longitude = dataCity.results[0].longitude;
         const cityName = dataCity.results[0].name;
@@ -106,6 +125,12 @@ async function getWeatherCity(city) {
 const searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", (e) => {
     e.preventDefault();
+    let city = document.querySelector("#search-bar");
+    getWeatherCity(city.value)
+})
+
+const searchIcon = document.querySelector("#search-icon");
+searchIcon.addEventListener("click", () => {
     let city = document.querySelector("#search-bar");
     getWeatherCity(city.value)
 })
@@ -124,7 +149,7 @@ async function getWeather(latitude, longitude, city) {
         const dataDay = await responseDay.json();
 
         // Cek lokasi
-        if(city == undefined) {
+        if (city == undefined) {
             document.querySelector("#city-name").innerHTML = "Jakarta";
         } else {
             document.querySelector("#city-name").innerHTML = city;
@@ -133,7 +158,7 @@ async function getWeather(latitude, longitude, city) {
         // Background weather
         backgroundImg = document.querySelector("#background");
         backgroundImg.style = `background-image: url(${background[dataDay.current.weather_code]})`;
-        
+
         // Weekly weather
         document.querySelector("#week-forecast-scrolling").innerHTML = "";
         dataWeek.daily.time.forEach((e, i) => {
@@ -142,7 +167,7 @@ async function getWeather(latitude, longitude, city) {
                     <div class="week-card-info">
                         <div class="week-date">
                             <div class="week-image">
-                                <img src="${weekly[dataWeek.daily.weather_code[i]].image}" alt="" class="week-img-weather">
+                                <img src="${weekly[dataWeek.daily.weather_code[i]].image}" alt="weekly weather image" class="week-img-weather">
                             </div>
                             <div class="week-date-info">
                                 <p>${dateFormatted(e)}</p>
@@ -161,12 +186,12 @@ async function getWeather(latitude, longitude, city) {
         // Current Weather
         if (dataDay.current.is_day == 0) {
             document.querySelector("#current-img-weather").innerHTML = `
-                <img src="${wmo[dataDay.current.weather_code].night.image}" alt="current weather" class="today-img-weather">
+                <img src="${wmo[dataDay.current.weather_code].night.image}" alt="current weather image" class="today-img-weather">
             `;
             document.querySelector("#today-code").innerHTML = `${wmo[dataDay.current.weather_code].night.description}`;
         } else if (dataDay.current.is_day == 1) {
             document.querySelector("#current-img-weather").innerHTML = `
-                <img src="${wmo[dataDay.current.weather_code].day.image}" alt="current weather" class="today-img-weather">
+                <img src="${wmo[dataDay.current.weather_code].day.image}" alt="current weather image" class="today-img-weather">
             `;
             document.querySelector("#today-code").innerHTML = `${wmo[dataDay.current.weather_code].day.description}`;
         };
@@ -194,7 +219,7 @@ async function getWeather(latitude, longitude, city) {
                     <div class="today-card">
                         <div class="today-card-info">
                             <p>${hour}:${minute}</p>
-                            <img src="${wmo[dataDay.hourly.weather_code[i]].day.image}" alt="" class="hour-img-weather">
+                            <img src="${wmo[dataDay.hourly.weather_code[i]].day.image}" alt="hourly weather image" class="hour-img-weather">
                             <p>${dataDay.hourly.temperature_2m[i]}&deg;C</p>
                         </div>
                     </div>

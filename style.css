@@ -65,7 +65,7 @@ p {
 #date {
     text-align: right;
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 13px;
     font-family: "Comfortaa", sans-serif;
 }
 
@@ -145,7 +145,7 @@ form {
     border: none;
     color: #fff;
     padding: 10px 0;
-    font-size: 14px;
+    font-size: 13px;
     outline: none;
     flex: 1;
 }
@@ -155,7 +155,7 @@ input::placeholder {
 }
 
 .fa-search {
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
     padding: 0 10px;
 }
@@ -304,4 +304,75 @@ input::placeholder {
         bottom: 0;
         opacity: 0;
     }
+}
+
+@media (max-width: 1024px) {        
+    body, main, #background {
+        height: 120vh;
+    }
+
+    .container {
+        flex-direction: column;
+        width: 90%;
+        height: auto;
+        padding: 20px;
+    }
+
+    #today-temp {
+        font-size: 50px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .today-img-weather {
+        height: 100px;
+        width: auto;
+    }
+
+    .today-card {
+        padding: 5px 10px;
+    }
+
+    .hour-img-weather {
+        height: 50px;
+        width: auto;
+    }
+
+    .right-content {
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+    
+    .flex-row {
+        display: flex;
+        gap: 20px
+    }
+
+    #weather-details {
+        flex: 0.5;
+    }
+
+    #weather-details {
+        margin-top: 10px;
+        gap: 5px;
+    }
+
+    .weather-detail-border {
+        display: none;
+    }
+
+    .week-forecast {
+        flex: 0.5;
+    }
+
+    .week-forecast {
+        margin-top: 10px;
+    }
+
+    #week-forecast-scrolling {
+        height: 155px;
+    }
+    
 }

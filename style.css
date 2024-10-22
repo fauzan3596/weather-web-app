@@ -331,12 +331,17 @@ input::placeholder {
         width: auto;
     }
 
+    #today-forecast {
+        gap: 10px
+    }
+
     .today-card {
         padding: 5px 10px;
+        flex-basis: 18%;
     }
 
     .hour-img-weather {
-        height: 50px;
+        height: 30px;
         width: auto;
     }
 
@@ -345,7 +350,7 @@ input::placeholder {
         padding: 10px 20px;
     }
     
-    .flex-row {
+    .flex-media {
         display: flex;
         gap: 20px
     }
@@ -375,4 +380,32 @@ input::placeholder {
         height: 155px;
     }
     
+}
+
+@media (max-width: 600px) {
+    body, main, #background {
+        height: 155vh;
+    }
+    
+    .container {
+        width: 100%;
+        height: 100%;
+        justify-content: flex-start;
+    }
+
+    .left-content {
+        flex: 0;
+    }
+
+    .right-content {
+        flex: 0;
+    }
+    
+    .flex-media {
+        flex-direction: column;
+    }
+
+    #week-forecast-scrolling {
+        height: 140px;
+    }
 }

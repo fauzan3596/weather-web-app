@@ -137,7 +137,7 @@ searchIcon.addEventListener("click", () => {
 
 async function getWeather(latitude, longitude, city) {
     try {
-        const urlWeek = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min`;
+        const urlWeek = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max`;
         const urlDay = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,is_day,weather_code,cloud_cover,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&forecast_days=1`;
 
         const responseWeek = await fetch(urlWeek);
@@ -226,6 +226,9 @@ async function getWeather(latitude, longitude, city) {
                 `
             };
         });
+
+        // Weekly Modals
+        modalWeek = document.querySelector("#weather-modal");
     } catch (error) {
         console.log(error)
     }

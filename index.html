@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <div class="detail">
-                            <p>Humadity</p>
+                            <p>Humidity</p>
                             <div class="detail-value">
                                 <p id="humadity-value"></p>
                                 <img src="assets/raindrops.svg" alt="humadity" class="detail-img">
@@ -88,6 +88,55 @@
                 </div>
             </aside>
         </div>
+
+        <div id="weather-modal">
+            <div id="modal-content">
+                <div class="modal-weather">
+                    <span class="close">&times;</span>
+                    <p id="modal-date">Wednesday, October 23</p>
+                    <img src="assets/clear-day.svg" alt="weather image" id="modal-img">
+                    <p id="modal-description">Light Showers</p>
+                </div>
+                <div class="modal-weather-details">
+                    <div class="modal-detail">
+                        <p>Temp max</p>
+                        <div class="modal-detail-value">
+                            <p id="modal-max-value">16</p>
+                            <img src="assets/thermometer-warmer.svg" alt="temp max" class="modal-detail-img">
+                        </div>
+                    </div>
+                    <div class="modal-detail">
+                        <p>Temp min</p>
+                        <div class="modal-detail-value">
+                            <p id="modal-min-value">16</p>
+                            <img src="assets/thermometer-colder.svg" alt="temp min" class="modal-detail-img">
+                        </div>
+                    </div>
+                    <div class="modal-detail">
+                        <p>Precipitation sum</p>
+                        <div class="modal-detail-value">
+                            <p id="modal-precipitation-value">16</p>
+                            <img src="assets/raindrops.svg" alt="precipitation sum" class="modal-detail-img">
+                        </div>
+                    </div>
+                    <div class="modal-detail">
+                        <p>Precipitation max probability</p>
+                        <div class="modal-detail-value">
+                            <p id="modal-probability-value">16</p>
+                            <img src="assets/precipitation.svg" alt="precipitation probability" class="modal-detail-img">
+                        </div>
+                    </div>
+                    <div class="modal-detail">
+                        <p>Wind speed</p>
+                        <div class="modal-detail-value">
+                            <p id="modal-wind-value">16</p>
+                            <img src="assets/wind.svg" alt="wind speed" class="modal-detail-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="snackbar">
             <i class="fa fa-ban"></i>
             <p>This location is not valid! Please enter a valid location.</p>

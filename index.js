@@ -157,7 +157,19 @@ async function getWeather(latitude, longitude, city) {
 
         // Background weather
         backgroundImg = document.querySelector("#background");
-        backgroundImg.style = `background-image: url(${background[dataDay.current.weather_code]})`;
+        if (dataDay.current.is_day == 0) {
+            if (dataDay.current.weather_code == 0 || dataDay.current.weather_code == 1 || dataDay.current.weather_code == 2) {
+                backgroundImg.style = `background-image: url(${background[dataDay.current.weather_code].night})`;
+            } else {
+                backgroundImg.style = `background-image: url(${background[dataDay.current.weather_code]})`;
+            }
+        } else {
+            if (dataDay.current.weather_code == 0 || dataDay.current.weather_code == 1 || dataDay.current.weather_code == 2) {
+                backgroundImg.style = `background-image: url(${background[dataDay.current.weather_code].day})`;
+            } else {
+                backgroundImg.style = `background-image: url(${background[dataDay.current.weather_code]})`;
+            }
+        }
 
         // Weekly weather
         document.querySelector("#week-forecast-scrolling").innerHTML = "";

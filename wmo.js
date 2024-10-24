@@ -397,9 +397,18 @@ const weekly = {
 }
 
 const background = {
-    0: "assets/background-img/clear.jpg",
-    1: "assets/background-img/clear.jpg",
-    2: "assets/background-img/partly-cloudy.jpg",
+    0: {
+        day: "assets/background-img/clear.jpg",
+        night: "assets/background-img/clear-night.jpg",
+    },
+    1: {
+        day: "assets/background-img/clear.jpg",
+        night: "assets/background-img/clear-night.jpg",
+    },
+    2: {
+        day: "assets/background-img/partly-cloudy.jpg",
+        night: "assets/background-img/partly-cloudy-night.jpg",
+    },
     3: "assets/background-img/overcast.jpg",
     45: "assets/background-img/fog.jpg",
     48: "assets/background-img/rime-fog.jpg",

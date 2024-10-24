@@ -226,9 +226,40 @@ async function getWeather(latitude, longitude, city) {
                 `
             };
         });
-
+        console.log(latitude, longitude)
         // Weekly Modals
-        modalWeek = document.querySelector("#weather-modal");
+        const weekCards = document.querySelectorAll(".week-card");
+        weekCards.forEach((e, i) => {
+            e.addEventListener("click", () => {
+                showWeatherModel(i);
+            })
+        });
+
+        function showWeatherModel(i) {
+            const modal = document.getElementById("weather-modal");
+            const closeModal = document.querySelector(".close");
+
+            document.querySelector("#modal-date").innerHTML = dateFormatted(dataWeek.daily.time[i]);
+            document.querySelector("#modal-img").innerHTML = `<img src="${weekly[dataWeek.daily.weather_code[i]].image}" alt="weather image" id="modal-img">`;
+            document.querySelector("#modal-description").innerHTML = weekly[dataWeek.daily.weather_code[i]].description;
+            document.querySelector("#modal-max-value").innerHTML = `${dataWeek.daily.temperature_2m_max[i]}&deg`
+            document.querySelector("#modal-min-value").innerHTML = `${dataWeek.daily.temperature_2m_min[i]}&deg`
+            document.querySelector("#modal-precipitation-value").innerHTML = `${dataWeek.daily.precipitation_sum[i]}mm`
+            document.querySelector("#modal-probability-value").innerHTML = `${dataWeek.daily.precipitation_probability_max[i]}%`
+            document.querySelector("#modal-wind-value").innerHTML = `${dataWeek.daily.wind_speed_10m_max[i]}km/h`
+
+            modal.style.display = "block";
+
+            closeModal.onclick = () => {
+                modal.style.display = "none";
+            }
+
+            window.onclick = (event) => {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
     } catch (error) {
         console.log(error)
     }
